@@ -17,10 +17,6 @@ st.sidebar.header("Filters")
 categories = data['Category'].unique()
 selected_category = st.sidebar.multiselect("Select Categories", options=categories, default=categories)
 
-# Import/Export filter
-import_export_types = data['Import_Export'].unique()
-selected_import_export = st.sidebar.multiselect("Select Transaction Type (Import/Export)", options=import_export_types, default=import_export_types)
-
 # Shipping method filter
 shipping_methods = data['Shipping_Method'].unique()
 selected_shipping_method = st.sidebar.multiselect("Select Shipping Method", options=shipping_methods, default=shipping_methods)
@@ -28,20 +24,20 @@ selected_shipping_method = st.sidebar.multiselect("Select Shipping Method", opti
 # Filter data based on selected filters
 filtered_data = data[
     (data['Category'].isin(selected_category)) & 
-    (data['Import_Export'].isin(selected_import_export)) &
     (data['Shipping_Method'].isin(selected_shipping_method))
 ]
+
 # Define category_values after filtering
-category_values = filtered_data.groupby('Category').agg({'Value': 'sum'}).reset_index()
+category_values = filtered_data.groupby('Category').agg({'Import': 'sum', 'Export': 'sum'}).reset_index()
 
 # Create two columns for side-by-side layout
 col1, col2 = st.columns(2)
 
 # Import Values Visualization
 with col1:
-    if 'Value' in category_values.columns:
-        import_values = filtered_data[filtered_data['Import_Export'] == 'Import'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
-        fig_imports = plt.figure(figsize=(6, 4))
+    if 'Import' in category_values.columns:
+        import_values = category_values['Import'].sort_values(ascending=False).head(10)
+        fig_imports = plt.figure(figsize=(9, 5))
         import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
         plt.title('Top 10 Categories by Import Value')
         plt.xlabel('Category')
@@ -54,9 +50,9 @@ with col1:
 
 # Export Values Visualization
 with col2:
-    if 'Value' in category_values.columns:
-        export_values = filtered_data[filtered_data['Import_Export'] == 'Export'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
-        fig_exports = plt.figure(figsize=(6, 4))
+    if 'Export' in category_values.columns:
+        export_values = category_values['Export'].sort_values(ascending=False).head(10)
+        fig_exports = plt.figure(figsize=(9, 5))
         export_values.plot(kind='bar', color='lightblue', edgecolor='black')
         plt.title('Top 10 Categories by Export Value')
         plt.xlabel('Category')
@@ -84,18 +80,6 @@ plt.pie(import_export_counts, labels=import_export_counts.index, autopct='%1.1f%
 plt.title('Proportion of Transactions by Import/Export Type')
 plt.axis('equal')
 st.pyplot(fig_import_export)
-plt.clf()  # Clear the figure after displaying
-
-# Bar chart for Payment Mode
-st.subheader("Most Preferred Payment Mode")
-payment_mode_counts = filtered_data['Payment_Terms'].value_counts()
-fig_payment_mode = plt.figure(figsize=(7, 4))
-payment_mode_counts.plot(kind='bar', color='skyblue', edgecolor='black')
-plt.title('Most Preferred Payment Mode')
-plt.xlabel('Payment Mode')
-plt.ylabel('Number of Transactions')
-plt.xticks(rotation=45)
-st.pyplot(fig_payment_mode)
 plt.clf()  # Clear the figure after displaying
 
 # Customer-wise Transactions
