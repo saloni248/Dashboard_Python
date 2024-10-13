@@ -74,21 +74,25 @@ st.pyplot(fig_import_export)
 plt.clf()  # Clear the figure after displaying
 
 # Customer-wise Transactions
+# Customer-wise Transactions
 st.subheader("Customer-wise Highest Import/Export Transactions")
-    customer_values = filtered_df.groupby(['Customer', 'Import_Export'])['Value'].sum().unstack().fillna(0)
-    top_customers = customer_values.sum(axis=1).sort_values(ascending=False).head(10)  # Select top 10 customers
-    top_customer_values = customer_values.loc[top_customers.index]
+customer_values = filtered_data.groupby(['Customer', 'Import_Export'])['Value'].sum().unstack().fillna(0)
+top_customers = customer_values.sum(axis=1).sort_values(ascending=False).head(10)  # Select top 10 customers
+top_customer_values = customer_values.loc[top_customers.index]
 
-    fig4, ax4 = plt.subplots(figsize=(10, 6))
-    top_customer_values.plot(kind='bar', stacked=True, color=['#ff6666', '#87CEFA'], edgecolor='black', ax=ax4)
+# Create a bar chart for customer-wise transactions
+fig4, ax4 = plt.subplots(figsize=(10, 6))
+top_customer_values.plot(kind='bar', stacked=True, color=['#ff6666', '#87CEFA'], edgecolor='black', ax=ax4)
 
-    ax4.set_title('Customer-wise Highest Import/Export Transactions')
-    ax4.set_xlabel('Customer')
-    ax4.set_ylabel('Transaction Value (in USD)')
-    ax4.legend(title='Transaction Type', loc='upper right')
-    plt.xticks(rotation=45, ha='right')  # Rotate the x-axis labels for better readability
-    plt.tight_layout()  # Adjust layout for better spacing
-    st.pyplot(fig4)
+ax4.set_title('Customer-wise Highest Import/Export Transactions')
+ax4.set_xlabel('Customer')
+ax4.set_ylabel('Transaction Value (in USD)')
+ax4.legend(title='Transaction Type', loc='upper right')
+plt.xticks(rotation=45, ha='right')  # Rotate the x-axis labels for better readability
+plt.tight_layout()  # Adjust layout for better spacing
+st.pyplot(fig4)
+plt.clf()  # Clear the figure after displaying
+
 # Heatmap of Correlation
 st.subheader("Correlation Heatmap of Numerical Features")
 fig_heatmap = plt.figure(figsize=(8, 6))
