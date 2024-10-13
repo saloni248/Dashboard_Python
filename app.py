@@ -41,7 +41,7 @@ col1, col2 = st.columns(2)
 with col1:
     if 'Value' in category_values.columns:
         import_values = filtered_data[filtered_data['Import_Export'] == 'Import'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
-        fig_imports = plt.figure(figsize=(9, 5))
+        fig_imports = plt.figure(figsize=(6, 4))
         import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
         plt.title('Top 10 Categories by Import Value')
         plt.xlabel('Category')
@@ -56,7 +56,7 @@ with col1:
 with col2:
     if 'Value' in category_values.columns:
         export_values = filtered_data[filtered_data['Import_Export'] == 'Export'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
-        fig_exports = plt.figure(figsize=(9, 5))
+        fig_exports = plt.figure(figsize=(6, 4))
         export_values.plot(kind='bar', color='lightblue', edgecolor='black')
         plt.title('Top 10 Categories by Export Value')
         plt.xlabel('Category')
