@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # Load the dataset
-data = pd.read_csv(r"C:\Users\salon\Downloads\archive\Imports_Exports_Dataset.csv")
+data = pd.read_csv("Imports_Exports_Dataset.csv")
 
 # Set the title of the app
 st.title("Imports and Exports Data Dashboard")
