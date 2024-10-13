@@ -1,6 +1,4 @@
 # Dashboard_Python
-Here's a sample README file text for your Imports and Exports Data Dashboard. You can customize it further to fit your needs:
-
 ---
 
 # Imports and Exports Data Dashboard
@@ -21,31 +19,6 @@ The Imports and Exports Data Dashboard is an interactive web application built u
 - **Seaborn**: A library based on Matplotlib for creating informative statistical graphics.
 - **Plotly**: A library for creating interactive plots and dashboards.
 - **Streamlit**: An open-source app framework for Machine Learning and Data Science projects.
-
-## Installation
-To run the dashboard locally, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-folder>
-   ```
-
-2. Create a virtual environment (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-
-3. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the Streamlit app:
-   ```bash
-   streamlit run app.py
-   ```
 
 ## Dataset
 The dashboard uses a CSV dataset named `Imports_Exports_Dataset.csv`. The dataset should contain the following columns:
