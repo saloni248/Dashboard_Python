@@ -35,7 +35,7 @@ filtered_data = data[
 # Define category_values after filtering
 category_values = filtered_data.groupby('Category').agg({'Import': 'sum', 'Export': 'sum'}).reset_index()
 
-# Now you can check the keys of category_values
+# Check the keys of category_values
 st.write("Category Values Columns:", category_values.columns)
 
 # Create two columns for side-by-side layout
@@ -56,6 +56,7 @@ with col1:
     else:
         st.error("No 'Import' data found in category_values.")
 
+# Export Values Visualization
 with col2:
     if 'Export' in category_values.columns:
         export_values = category_values['Export'].sort_values(ascending=False).head(10)
@@ -69,6 +70,7 @@ with col2:
         plt.clf()  # Clear the figure after displaying
     else:
         st.error("No 'Export' data found in category_values.")
+
 # Pie chart for Shipping Method
 st.subheader("Proportion of Transactions by Shipping Method")
 shipping_method_counts = filtered_data['Shipping_Method'].value_counts()
