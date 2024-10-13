@@ -32,7 +32,10 @@ filtered_data = data[
     (data['Shipping_Method'].isin(selected_shipping_method))
 ]
 
-# Check the keys of category_values
+# Define category_values after filtering
+category_values = filtered_data.groupby('Category').agg({'Import': 'sum', 'Export': 'sum'}).reset_index()
+
+# Now you can check the keys of category_values
 st.write("Category Values Columns:", category_values.columns)
 
 # Create two columns for side-by-side layout
@@ -52,7 +55,7 @@ with col1:
         plt.clf()  # Clear the figure after displaying
     else:
         st.error("No 'Import' data found in category_values.")
-# Export Values Visualization
+
 with col2:
     if 'Export' in category_values.columns:
         export_values = category_values['Export'].sort_values(ascending=False).head(10)
