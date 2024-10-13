@@ -42,9 +42,6 @@ The dashboard will dynamically update the visualizations based on the selected f
 ## Contribution
 Feel free to fork the repository and submit pull requests for any improvements or bug fixes.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Acknowledgments
 - [Streamlit](https://streamlit.io/)
 - [Pandas](https://pandas.pydata.org/)
