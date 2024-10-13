@@ -32,19 +32,19 @@ filtered_data = data[
     (data['Shipping_Method'].isin(selected_shipping_method))
 ]
 
-# Define category_values after filtering
-category_values = filtered_data.groupby('Category').agg({'Import': 'sum', 'Export': 'sum'}).reset_index()
+# Check the columns of filtered_data
+st.write("Filtered Data Columns:", filtered_data.columns)
 
-# Check the keys of category_values
-st.write("Category Values Columns:", category_values.columns)
+# Define category_values after filtering
+category_values = filtered_data.groupby('Category').agg({'Value': 'sum'}).reset_index()
 
 # Create two columns for side-by-side layout
 col1, col2 = st.columns(2)
 
 # Import Values Visualization
 with col1:
-    if 'Import' in category_values.columns:
-        import_values = category_values['Import'].sort_values(ascending=False).head(10)
+    if 'Value' in category_values.columns:
+        import_values = filtered_data[filtered_data['Import_Export'] == 'Import'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
         fig_imports = plt.figure(figsize=(9, 5))
         import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
         plt.title('Top 10 Categories by Import Value')
@@ -58,8 +58,8 @@ with col1:
 
 # Export Values Visualization
 with col2:
-    if 'Export' in category_values.columns:
-        export_values = category_values['Export'].sort_values(ascending=False).head(10)
+    if 'Value' in category_values.columns:
+        export_values = filtered_data[filtered_data['Import_Export'] == 'Export'].groupby('Category')['Value'].sum().sort_values(ascending=False).head(10)
         fig_exports = plt.figure(figsize=(9, 5))
         export_values.plot(kind='bar', color='lightblue', edgecolor='black')
         plt.title('Top 10 Categories by Export Value')
