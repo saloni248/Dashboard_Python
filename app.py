@@ -31,10 +31,6 @@ filtered_data = data[
     (data['Import_Export'].isin(selected_import_export)) &
     (data['Shipping_Method'].isin(selected_shipping_method))
 ]
-
-# Check the columns of filtered_data
-st.write("Filtered Data Columns:", filtered_data.columns)
-
 # Define category_values after filtering
 category_values = filtered_data.groupby('Category').agg({'Value': 'sum'}).reset_index()
 
