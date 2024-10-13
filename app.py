@@ -74,7 +74,7 @@ st.pyplot(fig_import_export)
 plt.clf()  # Clear the figure after displaying
 
 # Customer-wise Transactions
- st.markdown("### Customer-wise Highest Import/Export Transactions")
+st.subheader("Customer-wise Highest Import/Export Transactions")
     customer_values = filtered_df.groupby(['Customer', 'Import_Export'])['Value'].sum().unstack().fillna(0)
     top_customers = customer_values.sum(axis=1).sort_values(ascending=False).head(10)  # Select top 10 customers
     top_customer_values = customer_values.loc[top_customers.index]
