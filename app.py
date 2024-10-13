@@ -1,4 +1,3 @@
-# Import the necessary libraries
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -6,7 +5,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # Load the dataset
-data = pd.read_csv("Imports_Exports_Dataset.csv")
+data = pd.read_csv(r"C:\Users\salon\Downloads\archive\Imports_Exports_Dataset.csv")
 
 # Set the title of the app
 st.title("Imports and Exports Data Dashboard")
@@ -48,6 +47,7 @@ plt.xlabel('Category')
 plt.ylabel('Import Value (in USD)')
 plt.xticks(rotation=45, ha='right')
 st.pyplot(fig_imports)
+plt.clf()  # Clear the figure after displaying
 
 # Plot Exports
 fig_exports = plt.figure(figsize=(9, 5))
@@ -57,6 +57,7 @@ plt.xlabel('Category')
 plt.ylabel('Export Value (in USD)')
 plt.xticks(rotation=45, ha='right')
 st.pyplot(fig_exports)
+plt.clf()  # Clear the figure after displaying
 
 # Pie chart for Shipping Method
 st.subheader("Proportion of Transactions by Shipping Method")
@@ -66,6 +67,7 @@ plt.pie(shipping_method_counts, labels=shipping_method_counts.index, autopct='%1
 plt.title('Proportion of Transactions by Shipping Method')
 plt.axis('equal')
 st.pyplot(fig_shipping)
+plt.clf()  # Clear the figure after displaying
 
 # Pie chart for Import/Export type
 st.subheader("Proportion of Transactions by Import/Export Type")
@@ -75,6 +77,7 @@ plt.pie(import_export_counts, labels=import_export_counts.index, autopct='%1.1f%
 plt.title('Proportion of Transactions by Import/Export Type')
 plt.axis('equal')
 st.pyplot(fig_import_export)
+plt.clf()  # Clear the figure after displaying
 
 # Bar chart for Payment Mode
 st.subheader("Most Preferred Payment Mode")
@@ -86,19 +89,22 @@ plt.xlabel('Payment Mode')
 plt.ylabel('Number of Transactions')
 plt.xticks(rotation=45)
 st.pyplot(fig_payment_mode)
+plt.clf()  # Clear the figure after displaying
 
 # Customer-wise Transactions
 st.subheader("Customer-wise Highest Import/Export Transactions")
 customer_values = filtered_data.groupby(['Customer', 'Import_Export'])['Value'].sum().unstack().fillna(0)
 top_customers = customer_values.sum(axis=1).sort_values(ascending=False).head(10)
 top_customer_values = customer_values.loc[top_customers.index]
-fig_customers = top_customer_values.plot(kind='bar', figsize=(7, 5), stacked=True, color=['lightcoral', 'lightblue'], edgecolor='black')
+fig_customers = plt.figure(figsize=(7, 5))
+top_customer_values.plot(kind='bar', stacked=True, color=['lightcoral', 'lightblue'], edgecolor='black')
 plt.title('Customer-wise Highest Import/Export Transactions')
 plt.xlabel('Customer')
 plt.ylabel('Transaction Value (in USD)')
 plt.xticks(rotation=45, ha='right')
 plt.legend(title='Transaction Type', loc='upper right')
 st.pyplot(fig_customers)
+plt.clf()  # Clear the figure after displaying
 
 # Heatmap of Correlation
 st.subheader("Correlation Heatmap of Numerical Features")
@@ -107,6 +113,7 @@ correlation_matrix = filtered_data[['Quantity', 'Value', 'Weight']].corr()
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Correlation Heatmap of Numerical Features')
 st.pyplot(fig_heatmap)
+plt.clf()  # Clear the figure after displaying
 
 # Box plot for Shipping Method
 st.subheader("Box Plot of Transaction Value by Shipping Method")
@@ -117,6 +124,7 @@ plt.ylabel('Transaction Value')
 plt.xlabel('Shipping Method')
 plt.xticks(rotation=45)
 st.pyplot(fig_box)
+plt.clf()  # Clear the figure after displaying
 
 # Show treemap using Plotly
 st.subheader("Treemap of Total Import/Export Values by Category")
