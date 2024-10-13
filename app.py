@@ -34,30 +34,33 @@ filtered_data = data[
 
 # Visualizations
 st.subheader("Top 10 Categories by Import and Export Value")
-category_values = filtered_data.groupby(['Category', 'Import_Export'])['Value'].sum().unstack().fillna(0)
 
-import_values = category_values['Import'].sort_values(ascending=False).head(10)
-export_values = category_values['Export'].sort_values(ascending=False).head(10)
+# Create two columns for side-by-side layout
+col1, col2 = st.columns(2)
 
-# Plot Imports
-fig_imports = plt.figure(figsize=(9, 5))
-import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
-plt.title('Top 10 Categories by Import Value')
-plt.xlabel('Category')
-plt.ylabel('Import Value (in USD)')
-plt.xticks(rotation=45, ha='right')
-st.pyplot(fig_imports)
-plt.clf()  # Clear the figure after displaying
+# Import Values Visualization
+with col1:
+    import_values = category_values['Import'].sort_values(ascending=False).head(10)
+    fig_imports = plt.figure(figsize=(9, 5))
+    import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
+    plt.title('Top 10 Categories by Import Value')
+    plt.xlabel('Category')
+    plt.ylabel('Import Value (in USD)')
+    plt.xticks(rotation=45, ha='right')
+    st.pyplot(fig_imports)
+    plt.clf()  # Clear the figure after displaying
 
-# Plot Exports
-fig_exports = plt.figure(figsize=(9, 5))
-export_values.plot(kind='bar', color='lightblue', edgecolor='black')
-plt.title('Top 10 Categories by Export Value')
-plt.xlabel('Category')
-plt.ylabel('Export Value (in USD)')
-plt.xticks(rotation=45, ha='right')
-st.pyplot(fig_exports)
-plt.clf()  # Clear the figure after displaying
+# Export Values Visualization
+with col2:
+    export_values = category_values['Export'].sort_values(ascending=False).head(10)
+    fig_exports = plt.figure(figsize=(9, 5))
+    export_values.plot(kind='bar', color='lightblue', edgecolor='black')
+    plt.title('Top 10 Categories by Export Value')
+    plt.xlabel('Category')
+    plt.ylabel('Export Value (in USD)')
+    plt.xticks(rotation=45, ha='right')
+    st.pyplot(fig_exports)
+    plt.clf()  # Clear the figure after displaying
 
 # Pie chart for Shipping Method
 st.subheader("Proportion of Transactions by Shipping Method")
@@ -70,7 +73,6 @@ st.pyplot(fig_shipping)
 plt.clf()  # Clear the figure after displaying
 
 # Pie chart for Import/Export type
-st.subheader("Proportion of Transactions by Import/Export Type")
 import_export_counts = filtered_data['Import_Export'].value_counts()
 fig_import_export = plt.figure(figsize=(5, 5))
 plt.pie(import_export_counts, labels=import_export_counts.index, autopct='%1.1f%%', colors=plt.cm.Set3.colors, startangle=90)
