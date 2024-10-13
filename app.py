@@ -32,36 +32,40 @@ filtered_data = data[
     (data['Shipping_Method'].isin(selected_shipping_method))
 ]
 
-# Visualizations
-st.subheader("Top 10 Categories by Import and Export Value")
+# Check the keys of category_values
+st.write("Category Values Columns:", category_values.columns)
 
 # Create two columns for side-by-side layout
 col1, col2 = st.columns(2)
 
 # Import Values Visualization
 with col1:
-    import_values = category_values['Import'].sort_values(ascending=False).head(10)
-    fig_imports = plt.figure(figsize=(9, 5))
-    import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
-    plt.title('Top 10 Categories by Import Value')
-    plt.xlabel('Category')
-    plt.ylabel('Import Value (in USD)')
-    plt.xticks(rotation=45, ha='right')
-    st.pyplot(fig_imports)
-    plt.clf()  # Clear the figure after displaying
-
+    if 'Import' in category_values.columns:
+        import_values = category_values['Import'].sort_values(ascending=False).head(10)
+        fig_imports = plt.figure(figsize=(9, 5))
+        import_values.plot(kind='bar', color='lightcoral', edgecolor='black')
+        plt.title('Top 10 Categories by Import Value')
+        plt.xlabel('Category')
+        plt.ylabel('Import Value (in USD)')
+        plt.xticks(rotation=45, ha='right')
+        st.pyplot(fig_imports)
+        plt.clf()  # Clear the figure after displaying
+    else:
+        st.error("No 'Import' data found in category_values.")
 # Export Values Visualization
 with col2:
-    export_values = category_values['Export'].sort_values(ascending=False).head(10)
-    fig_exports = plt.figure(figsize=(9, 5))
-    export_values.plot(kind='bar', color='lightblue', edgecolor='black')
-    plt.title('Top 10 Categories by Export Value')
-    plt.xlabel('Category')
-    plt.ylabel('Export Value (in USD)')
-    plt.xticks(rotation=45, ha='right')
-    st.pyplot(fig_exports)
-    plt.clf()  # Clear the figure after displaying
-
+    if 'Export' in category_values.columns:
+        export_values = category_values['Export'].sort_values(ascending=False).head(10)
+        fig_exports = plt.figure(figsize=(9, 5))
+        export_values.plot(kind='bar', color='lightblue', edgecolor='black')
+        plt.title('Top 10 Categories by Export Value')
+        plt.xlabel('Category')
+        plt.ylabel('Export Value (in USD)')
+        plt.xticks(rotation=45, ha='right')
+        st.pyplot(fig_exports)
+        plt.clf()  # Clear the figure after displaying
+    else:
+        st.error("No 'Export' data found in category_values.")
 # Pie chart for Shipping Method
 st.subheader("Proportion of Transactions by Shipping Method")
 shipping_method_counts = filtered_data['Shipping_Method'].value_counts()
